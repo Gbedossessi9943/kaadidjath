@@ -1,0 +1,29 @@
+# Commands à exécuter une fois Git installé
+
+# 1. Naviguer vers le dossier du projet
+cd c:\Users\ordi\Desktop\kaadidjath
+
+# 2. Initialiser Git
+git init
+
+# 3. Configurer Git (première fois seulement)
+git config --global user.name "Votre Nom"
+git config --global user.email "votre.email@example.com"
+
+# 4. Ajouter tous les fichiers
+git add .
+
+# 5. Faire le premier commit
+git commit -m "Initial commit - Kadidjath Platform Complete"
+
+# 6. Ajouter le repository distant (remplacez VOTRE_USERNAME)
+git remote add origin https://github.com/VOTRE_USERNAME/kadidjath-platform.git
+
+# 7. Pousser sur GitHub
+git push -u origin main
+
+# 8. Activer GitHub Pages (manuellement sur le site GitHub)
+# - Allez dans Settings > Pages
+# - Source: Deploy from a branch
+# - Branch: main
+# - Cliquez sur Save

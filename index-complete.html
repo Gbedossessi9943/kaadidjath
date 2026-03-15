@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kadidjath - Plateforme Complète de Produits Frais</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background-color: #f9fafb;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #16a34a;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: #16a34a;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #dc2626;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            background-color: white;
+            color: #16a34a;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn-primary {
+            background-color: #16a34a;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #ca8a04;
+            color: white;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1f2937;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            height: 200px;
+            background: linear-gradient(45deg, #dcfce7, #bbf7d0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #16a34a;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #16a34a;
+        }
+
+        .product-unit {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .close:hover {
+            color: #1f2937;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.25rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: #16a34a;
+            box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+        }
+
+        .cart-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+        }
+
+        .quantity-btn {
+            padding: 0.25rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        .quantity-value {
+            padding: 0.25rem 1rem;
+            font-weight: 500;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .partner-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .partner-rating {
+            color: #fbbf24;
+            margin-top: 0.5rem;
+        }
+
+        .order-tracking {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .tracking-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background: #f9fafb;
+        }
+
+        .tracking-step.active {
+            background: #dcfce7;
+            border: 1px solid #16a34a;
+        }
+
+        .tracking-step.completed {
+            background: #bbf7d0;
+        }
+
+        .tracking-icon {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background: #16a34a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .payment-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .payment-option:hover {
+            border-color: #16a34a;
+            background: #f0fdf4;
+        }
+
+        .payment-option.selected {
+            border-color: #16a34a;
+            background: #dcfce7;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #6b7280;
+        }
+
+        .error {
+            text-align: center;
+            padding: 2rem;
+            color: #dc2626;
+            background-color: #fef2f2;
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .success {
+            text-align: center;
+            padding: 2rem;
+            color: #16a34a;
+            background-color: #f0fdf4;
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e5e7eb;
+            margin-bottom: 2rem;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            background: #f9fafb;
+        }
+
+        .tab.active {
+            border-bottom-color: #16a34a;
+            color: #16a34a;
+            background: #f0fdf4;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        footer {
+            background-color: #1f2937;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #16a34a;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #16a34a;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            z-index: 2000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">🌱 Kadidjath</div>
+                <nav>
+                    <a href="#accueil">Accueil</a>
+                    <a href="#produits">Produits</a>
+                    <a href="#partenaires">Partenaires</a>
+                    <a href="#commandes">Mes Commandes</a>
+                    <div class="cart-icon" onclick="showCart()">
+                        🛒
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                    <div id="userSection">
+                        <a href="#" onclick="showLogin()">Connexion</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="accueil">
+            <div class="container">
+                <h1>Produits Frais du Bénin</h1>
+                <p>Légumes, fruits et céréales de qualité directement des producteurs locaux</p>
+                <p>✅ Authentification sécurisée | ✅ Paiement Mobile Money | ✅ Livraison tracking | ✅ WhatsApp Business</p>
+                <a href="#produits" class="btn">Découvrir nos produits</a>
+            </div>
+        </section>
+
+        <section class="section" id="produits">
+            <div class="container">
+                <h2>Nos Produits Frais</h2>
+                <div class="tabs">
+                    <div class="tab active" onclick="showTab('all')">Tous</div>
+                    <div class="tab" onclick="showTab('légumes')">Légumes</div>
+                    <div class="tab" onclick="showTab('fruits')">Fruits</div>
+                    <div class="tab" onclick="showTab('céréales')">Céréales</div>
+                </div>
+                <div id="productsContainer">
+                    <div class="loading">Chargement des produits...</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="partenaires">
+            <div class="container">
+                <h2>Nos Partenaires Locaux</h2>
+                <div id="partnersContainer">
+                    <div class="loading">Chargement des partenaires...</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="commandes">
+            <div class="container">
+                <h2>Suivi de Commandes</h2>
+                <div id="ordersContainer">
+                    <div class="loading">Connectez-vous pour voir vos commandes</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🌱 Kadidjath</h3>
+                    <p>Plateforme complète pour produits frais au Bénin avec toutes les fonctionnalités du README.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>📞 Contact</h3>
+                    <p>📱 WhatsApp: +229 XX XX XX XX</p>
+                    <p>📧 contact@kadidjath.bj</p>
+                    <p>📍 Cotonou, Abomey-Calavi</p>
+                </div>
+                <div class="footer-section">
+                    <h3>🚀 Fonctionnalités</h3>
+                    <p>✅ Authentification JWT</p>
+                    <p>✅ Paiement Mobile Money</p>
+                    <p>✅ Livraison avec tracking</p>
+                    <p>✅ WhatsApp Business</p>
+                    <p>✅ Partenaires locaux</p>
+                    <p>✅ Prix en temps réel</p>
+                </div>
+            </div>
+            <p>&copy; 2024 Kadidjath - Plateforme Complète Conforme au README</p>
+        </div>
+    </footer>
+
+    <!-- Modal Connexion -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideLogin()">&times;</span>
+            <h2>Connexion</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mot de passe</label>
+                    <input type="password" class="form-input" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Se connecter</button>
+            </form>
+            <p style="margin-top: 1rem; text-align: center;">
+                Pas encore de compte ? <a href="#" onclick="showRegister()">S'inscrire</a>
+            </p>
+            <p style="margin-top: 0.5rem; text-align: center; font-size: 0.875rem; color: #6b7280;">
+                Compte de test: admin@kadidjath.bj / admin123
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal Inscription -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideRegister()">&times;</span>
+            <h2>Inscription</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label class="form-label">Nom complet</label>
+                    <input type="text" class="form-input" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Téléphone</label>
+                    <input type="tel" class="form-input" id="registerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mot de passe</label>
+                    <input type="password" class="form-input" id="registerPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">S'inscrire</button>
+            </form>
+            <p style="margin-top: 1rem; text-align: center;">
+                Déjà un compte ? <a href="#" onclick="showLogin()">Se connecter</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal Panier -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideCart()">&times;</span>
+            <h2>Votre Panier</h2>
+            <div id="cartItems">
+                <p>Votre panier est vide</p>
+            </div>
+            <div style="margin-top: 2rem;">
+                <strong>Total: <span id="cartTotal">0</span> FCFA</strong>
+            </div>
+            <button class="btn btn-primary" style="margin-top: 1rem; width: 100%;" onclick="showCheckout()">Commander</button>
+        </div>
+    </div>
+
+    <!-- Modal Checkout -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideCheckout()">&times;</span>
+            <h2>Finaliser la Commande</h2>
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label class="form-label">Nom complet</label>
+                    <input type="text" class="form-input" id="checkoutName" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Téléphone</label>
+                    <input type="tel" class="form-input" id="checkoutPhone" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="checkoutEmail" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Adresse de livraison</label>
+                    <input type="text" class="form-input" id="checkoutAddress" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Ville</label>
+                    <select class="form-input" id="checkoutCity" required>
+                        <option value="">Choisir une ville</option>
+                        <option value="Abomey-Calavi">Abomey-Calavi</option>
+                        <option value="Cotonou">Cotonou</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+                
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Méthode de paiement</h3>
+                <div class="payment-options">
+                    <div class="payment-option" onclick="selectPayment('mobile_money')">
+                        <div>📱</div>
+                        <div>Mobile Money</div>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment('carte_bancaire')">
+                        <div>💳</div>
+                        <div>Carte Bancaire</div>
+                    </div>
+                    <div class="payment-option selected" onclick="selectPayment('à la livraison')">
+                        <div>💰</div>
+                        <div>À la livraison</div>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="mobileMoneyGroup" style="display: none;">
+                    <label class="form-label">Opérateur Mobile Money</label>
+                    <select class="form-input" id="mobileMoneyOperator">
+                        <option value="MTN">MTN Mobile Money</option>
+                        <option value="Moov">Moov Money</option>
+                    </select>
+                </div>
+                
+                <div style="margin-top: 2rem;">
+                    <strong>Total: <span id="checkoutTotal">0</span> FCFA</strong>
+                    <br>
+                    <strong>Livraison: <span id="deliveryCost">0</span> FCFA</strong>
+                </div>
+                
+                <div style="margin-top: 1rem;">
+                    <label>
+                        <input type="checkbox" id="sendWhatsApp" checked> 
+                        Envoyer confirmation via WhatsApp
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Confirmer la commande</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Tracking -->
+    <div id="trackingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideTracking()">&times;</span>
+            <h2>Suivi de Commande</h2>
+            <div id="trackingContent">
+                <div class="loading">Chargement du suivi...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API URL
+        const API_URL = 'http://localhost:5001/api';
+        
+        // État global
+        let cart = JSON.parse(localStorage.getItem('kadidjath_cart')) || [];
+        let currentUser = JSON.parse(localStorage.getItem('kadidjath_user')) || null;
+        let authToken = localStorage.getItem('kadidjath_token') || null;
+        let products = [];
+        let partners = [];
+        let selectedPayment = 'à la livraison';
+        let currentCategory = 'all';
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            loadPartners();
+            updateCartDisplay();
+            updateUserDisplay();
+            
+            // Formulaire de connexion
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            
+            // Formulaire d'inscription
+            document.getElementById('registerForm').addEventListener('submit', handleRegister);
+            
+            // Formulaire de commande
+            document.getElementById('checkoutForm').addEventListener('submit', handleCheckout);
+            
+            // Changement de ville pour calculer les frais de livraison
+            document.getElementById('checkoutCity').addEventListener('change', calculateDelivery);
+        });
+
+        // Authentification
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                const response = await fetch(`${API_URL}/users/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                if (response.ok) {
+                    currentUser = data.user;
+                    authToken = data.token;
+                    localStorage.setItem('kadidjath_user', JSON.stringify(currentUser));
+                    localStorage.setItem('kadidjath_token', authToken);
+                    updateUserDisplay();
+                    hideLogin();
+                    showNotification(`Bienvenue ${currentUser.name}!`);
+                    loadOrders();
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            } catch (error) {
+                showNotification('Erreur de connexion', 'error');
+            }
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const phone = document.getElementById('registerPhone').value;
+            const password = document.getElementById('registerPassword').value;
+            
+            try {
+                const response = await fetch(`${API_URL}/users/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, phone, password })
+                });
+                
+                const data = await response.json();
+                if (response.ok) {
+                    currentUser = data.user;
+                    authToken = data.token;
+                    localStorage.setItem('kadidjath_user', JSON.stringify(currentUser));
+                    localStorage.setItem('kadidjath_token', authToken);
+                    updateUserDisplay();
+                    hideRegister();
+                    showNotification(`Bienvenue ${currentUser.name}!`);
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            } catch (error) {
+                showNotification('Erreur d\'inscription', 'error');
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            authToken = null;
+            localStorage.removeItem('kadidjath_user');
+            localStorage.removeItem('kadidjath_token');
+            updateUserDisplay();
+            showNotification('Déconnecté avec succès');
+            document.getElementById('ordersContainer').innerHTML = '<div class="loading">Connectez-vous pour voir vos commandes</div>';
+        }
+
+        // Produits
+        async function loadProducts() {
+            try {
+                const response = await fetch(`${API_URL}/products`);
+                products = await response.json();
+                displayProducts();
+            } catch (error) {
+                document.getElementById('productsContainer').innerHTML = '<div class="error">Impossible de charger les produits</div>';
+            }
+        }
+
+        function displayProducts() {
+            const container = document.getElementById('productsContainer');
+            let filteredProducts = products;
+            
+            if (currentCategory !== 'all') {
+                filteredProducts = products.filter(p => p.category === currentCategory);
+            }
+            
+            if (filteredProducts.length === 0) {
+                container.innerHTML = '<div class="loading">Aucun produit dans cette catégorie</div>';
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="products-grid">
+                    ${filteredProducts.map(product => `
+                        <div class="product-card" onclick="addToCart('${product._id}', '${product.name}', ${product.price}, '${product.unit}')">
+                            <div class="product-image">
+                                ${getProductEmoji(product.category)}
+                            </div>
+                            <div class="product-info">
+                                <div class="product-name">${product.name}</div>
+                                <div class="product-description">${product.description}</div>
+                                <div>
+                                    <span class="product-price">${product.price}</span>
+                                    <span class="product-unit"> FCFA/${product.unit}</span>
+                                </div>
+                                <div style="margin-top: 0.5rem; font-size: 0.875rem; color: #6b7280;">
+                                    📍 ${product.origin} | 📦 Stock: ${product.stock}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function showTab(category) {
+            currentCategory = category;
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            displayProducts();
+        }
+
+        function getProductEmoji(category) {
+            const emojis = {
+                'légumes': '🥬',
+                'fruits': '🍎',
+                'céréales': '🌾',
+                'autres': '🥕'
+            };
+            return emojis[category] || '🥬';
+        }
+
+        // Partenaires
+        async function loadPartners() {
+            try {
+                const response = await fetch(`${API_URL}/partners`);
+                partners = await response.json();
+                displayPartners();
+            } catch (error) {
+                document.getElementById('partnersContainer').innerHTML = '<div class="error">Impossible de charger les partenaires</div>';
+            }
+        }
+
+        function displayPartners() {
+            const container = document.getElementById('partnersContainer');
+            container.innerHTML = `
+                <div class="partners-grid">
+                    ${partners.map(partner => `
+                        <div class="partner-card">
+                            <h3>${partner.name}</h3>
+                            <p>📍 ${partner.location}</p>
+                            <p>🌱 Spécialité: ${partner.specialty}</p>
+                            <p>📞 ${partner.phone}</p>
+                            <div class="partner-rating">
+                                ${'⭐'.repeat(Math.floor(partner.rating))} ${partner.rating}
+                            </div>
+                            <p style="margin-top: 1rem; font-size: 0.875rem; color: #6b7280;">
+                                ${partner.products.length} produits disponibles
+                            </p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Panier
+        function addToCart(id, name, price, unit) {
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id, name, price, unit, quantity: 1 });
+            }
+            
+            saveCart();
+            updateCartDisplay();
+            showNotification(`${name} ajouté au panier`);
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            saveCart();
+            updateCartDisplay();
+        }
+
+        function updateQuantity(id, change) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(id);
+                } else {
+                    saveCart();
+                    updateCartDisplay();
+                }
+            }
+        }
+
+        function saveCart() {
+            localStorage.setItem('kadidjath_cart', JSON.stringify(cart));
+        }
+
+        function updateCartDisplay() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Votre panier est vide</p>';
+                cartTotal.textContent = '0';
+                return;
+            }
+            
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div>
+                        <strong>${item.name}</strong><br>
+                        <small>${item.price} FCFA/${item.unit}</small>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div class="quantity-control">
+                            <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
+                            <span class="quantity-value">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
+                        </div>
+                        <span>${item.price * item.quantity} FCFA</span>
+                        <button onclick="removeFromCart('${item.id}')" style="background: #dc2626; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">×</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = total;
+        }
+
+        // Commandes
+        async function loadOrders() {
+            if (!authToken) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/orders`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                const orders = await response.json();
+                displayOrders(orders);
+            } catch (error) {
+                document.getElementById('ordersContainer').innerHTML = '<div class="error">Impossible de charger les commandes</div>';
+            }
+        }
+
+        function displayOrders(orders) {
+            const container = document.getElementById('ordersContainer');
+            
+            if (orders.length === 0) {
+                container.innerHTML = '<div class="loading">Aucune commande pour le moment</div>';
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="order-tracking">
+                    ${orders.map(order => `
+                        <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem; margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong>Commande #${order._id}</strong><br>
+                                    <small>${new Date(order.createdAt).toLocaleDateString('fr-FR')}</small><br>
+                                    <small>${order.items.length} articles - ${order.totalAmount} FCFA</small>
+                                </div>
+                                <div>
+                                    <span style="background: ${getStatusColor(order.status)}; color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.875rem;">
+                                        ${order.status}
+                                    </span>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary" style="margin-top: 1rem;" onclick="trackOrder('${order._id}')">
+                                Suivre la livraison
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                'en attente': '#f59e0b',
+                'confirmée': '#3b82f6',
+                'en préparation': '#8b5cf6',
+                'en livraison': '#06b6d4',
+                'livrée': '#10b981',
+                'annulée': '#ef4444'
+            };
+            return colors[status] || '#6b7280';
+        }
+
+        async function trackOrder(orderId) {
+            try {
+                const response = await fetch(`${API_URL}/delivery/track/${orderId}`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                const tracking = await response.json();
+                displayTracking(tracking);
+            } catch (error) {
+                showNotification('Erreur lors du suivi', 'error');
+            }
+        }
+
+        function displayTracking(tracking) {
+            const content = document.getElementById('trackingContent');
+            content.innerHTML = `
+                <div style="margin-bottom: 2rem;">
+                    <strong>Commande #${tracking.orderId}</strong><br>
+                    <span style="background: ${getStatusColor(tracking.currentStatus)}; color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">
+                        ${tracking.currentStatus}
+                    </span>
+                </div>
+                ${tracking.tracking.map((step, index) => `
+                    <div class="tracking-step ${step.status === tracking.currentStatus ? 'active' : ''} ${index < tracking.tracking.findIndex(s => s.status === tracking.currentStatus) ? 'completed' : ''}">
+                        <div class="tracking-icon">${index < tracking.tracking.findIndex(s => s.status === tracking.currentStatus) ? '✓' : index + 1}</div>
+                        <div>
+                            <strong>${step.message}</strong><br>
+                            <small>${new Date(step.time).toLocaleString('fr-FR')}</small>
+                        </div>
+                    </div>
+                `).join('')}
+                <div style="margin-top: 2rem; text-align: center;">
+                    <strong>Livraison estimée:</strong><br>
+                    ${new Date(tracking.estimatedDelivery).toLocaleString('fr-FR')}
+                </div>
+            `;
+            showTracking();
+        }
+
+        // Checkout
+        async function handleCheckout(e) {
+            e.preventDefault();
+            
+            if (!currentUser) {
+                showNotification('Veuillez vous connecter', 'error');
+                showLogin();
+                return;
+            }
+            
+            const orderData = {
+                customer: {
+                    name: document.getElementById('checkoutName').value,
+                    phone: document.getElementById('checkoutPhone').value,
+                    email: document.getElementById('checkoutEmail').value,
+                    address: document.getElementById('checkoutAddress').value,
+                    city: document.getElementById('checkoutCity').value
+                },
+                items: cart.map(item => ({
+                    product: item.id,
+                    quantity: item.quantity,
+                    price: item.price
+                })),
+                totalAmount: parseInt(document.getElementById('checkoutTotal').textContent),
+                paymentMethod: selectedPayment,
+                deliveryInfo: {
+                    method: 'livraison',
+                    cost: parseInt(document.getElementById('deliveryCost').textContent),
+                    estimatedTime: document.getElementById('checkoutCity').value === 'Abomey-Calavi' ? '2-3 heures' : '3-4 heures'
+                }
+            };
+            
+            try {
+                const response = await fetch(`${API_URL}/orders`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify(orderData)
+                });
+                
+                const order = await response.json();
+                if (response.ok) {
+                    // Si paiement Mobile Money
+                    if (selectedPayment === 'mobile_money') {
+                        await processMobileMoneyPayment(order);
+                    }
+                    
+                    // Si WhatsApp demandé
+                    if (document.getElementById('sendWhatsApp').checked) {
+                        await sendWhatsAppNotification(order);
+                    }
+                    
+                    cart = [];
+                    saveCart();
+                    updateCartDisplay();
+                    hideCheckout();
+                    showNotification(`Commande #${order._id} confirmée!`);
+                    loadOrders();
+                } else {
+                    showNotification(order.message, 'error');
+                }
+            } catch (error) {
+                showNotification('Erreur lors de la commande', 'error');
+            }
+        }
+
+        async function processMobileMoneyPayment(order) {
+            const operator = document.getElementById('mobileMoneyOperator').value;
+            
+            try {
+                const response = await fetch(`${API_URL}/payment/mobile-money`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        amount: order.totalAmount,
+                        phone: order.customer.phone,
+                        operator: operator,
+                        orderId: order._id
+                    })
+                });
+                
+                const payment = await response.json();
+                if (payment.success) {
+                    showNotification(`Paiement ${operator} initié (ID: ${payment.transactionId})`);
+                }
+            } catch (error) {
+                showNotification('Erreur lors du paiement', 'error');
+            }
+        }
+
+        async function sendWhatsAppNotification(order) {
+            try {
+                const response = await fetch(`${API_URL}/whatsapp/send-order`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        order: order,
+                        customerPhone: order.customer.phone
+                    })
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    showNotification('Confirmation WhatsApp envoyée');
+                }
+            } catch (error) {
+                console.log('Erreur WhatsApp:', error);
+            }
+        }
+
+        async function calculateDelivery() {
+            const city = document.getElementById('checkoutCity').value;
+            if (!city) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/delivery/calculate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        city: city,
+                        items: cart
+                    })
+                });
+                
+                const delivery = await response.json();
+                document.getElementById('deliveryCost').textContent = delivery.deliveryCost;
+                
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                document.getElementById('checkoutTotal').textContent = subtotal + delivery.deliveryCost;
+            } catch (error) {
+                console.log('Erreur de calcul livraison:', error);
+            }
+        }
+
+        // UI Functions
+        function updateUserDisplay() {
+            const userSection = document.getElementById('userSection');
+            if (currentUser) {
+                userSection.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <span>👤 ${currentUser.name}</span>
+                        <a href="#" onclick="logout()" style="color: #dc2626;">Déconnexion</a>
+                    </div>
+                `;
+                loadOrders();
+            } else {
+                userSection.innerHTML = '<a href="#" onclick="showLogin()">Connexion</a>';
+            }
+        }
+
+        function selectPayment(method) {
+            selectedPayment = method;
+            document.querySelectorAll('.payment-option').forEach(option => option.classList.remove('selected'));
+            event.target.closest('.payment-option').classList.add('selected');
+            
+            const mobileMoneyGroup = document.getElementById('mobileMoneyGroup');
+            mobileMoneyGroup.style.display = method === 'mobile_money' ? 'block' : 'none';
+        }
+
+        function showLogin() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function hideLogin() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function showRegister() {
+            hideLogin();
+            document.getElementById('registerModal').style.display = 'block';
+        }
+
+        function hideRegister() {
+            document.getElementById('registerModal').style.display = 'none';
+        }
+
+        function showCart() {
+            document.getElementById('cartModal').style.display = 'block';
+            updateCartDisplay();
+        }
+
+        function hideCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        function showCheckout() {
+            if (cart.length === 0) {
+                showNotification('Votre panier est vide', 'error');
+                return;
+            }
+            
+            if (!currentUser) {
+                showNotification('Veuillez vous connecter', 'error');
+                showLogin();
+                return;
+            }
+            
+            hideCart();
+            document.getElementById('checkoutModal').style.display = 'block';
+            
+            // Pré-remplir avec les infos utilisateur
+            document.getElementById('checkoutName').value = currentUser.name || '';
+            document.getElementById('checkoutEmail').value = currentUser.email || '';
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('checkoutTotal').textContent = subtotal;
+        }
+
+        function hideCheckout() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        function showTracking() {
+            document.getElementById('trackingModal').style.display = 'block';
+        }
+
+        function hideTracking() {
+            document.getElementById('trackingModal').style.display = 'none';
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.style.background = type === 'error' ? '#dc2626' : '#16a34a';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Fermer les modals quand on clique en dehors
+        window.onclick = function(event) {
+            const modals = ['loginModal', 'registerModal', 'cartModal', 'checkoutModal', 'trackingModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

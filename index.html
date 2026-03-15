@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kadidjath - Produits Frais du Bénin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background-color: #f9fafb;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #16a34a;
+        }
+
+        nav a {
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 1.5rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: #16a34a;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            background-color: white;
+            color: #16a34a;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1f2937;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            height: 200px;
+            background: linear-gradient(45deg, #dcfce7, #bbf7d0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #16a34a;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #16a34a;
+        }
+
+        .product-unit {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #6b7280;
+        }
+
+        .error {
+            text-align: center;
+            padding: 2rem;
+            color: #dc2626;
+            background-color: #fef2f2;
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        footer {
+            background-color: #1f2937;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #16a34a;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .close {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .close:hover {
+            color: #1f2937;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #dc2626;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav {
+                display: flex;
+                gap: 1rem;
+            }
+            
+            nav a {
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">🌱 Kadidjath</div>
+                <nav>
+                    <a href="#accueil">Accueil</a>
+                    <a href="#produits">Produits</a>
+                    <a href="#contact">Contact</a>
+                    <div class="cart-icon" onclick="showCart()">
+                        🛒
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="accueil">
+            <div class="container">
+                <h1>Produits Frais du Bénin</h1>
+                <p>Légumes, fruits et céréales de qualité directement des producteurs locaux</p>
+                <a href="#produits" class="btn">Découvrir nos produits</a>
+            </div>
+        </section>
+
+        <section class="section" id="produits">
+            <div class="container">
+                <h2>Nos Produits</h2>
+                <div id="productsContainer">
+                    <div class="loading">Chargement des produits...</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>À propos</h3>
+                    <p>Kadidjath connecte les producteurs béninois directement aux consommateurs pour des produits frais et de qualité.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>📞 +229 XX XX XX XX</p>
+                    <p>📧 contact@kadidjath.bj</p>
+                    <p>📍 Cotonou, Bénin</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Livraison</h3>
+                    <p>Livraison rapide à Cotonou et Abomey-Calavi</p>
+                    <p>Commande passée avant 12h = livraison le jour même</p>
+                </div>
+            </div>
+            <p>&copy; 2024 Kadidjath. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Modal pour le panier -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideCart()">&times;</span>
+            <h2>Votre Panier</h2>
+            <div id="cartItems">
+                <p>Votre panier est vide</p>
+            </div>
+            <div style="margin-top: 2rem;">
+                <strong>Total: <span id="cartTotal">0</span> FCFA</strong>
+            </div>
+            <button class="btn" style="margin-top: 1rem; width: 100%;" onclick="checkout()">Commander</button>
+        </div>
+    </div>
+
+    <script>
+        // API URL
+        const API_URL = 'http://localhost:5001/api';
+        
+        // Panier
+        let cart = JSON.parse(localStorage.getItem('kadidjath_cart')) || [];
+        
+        // Charger les produits
+        async function loadProducts() {
+            try {
+                const response = await fetch(`${API_URL}/products`);
+                if (!response.ok) throw new Error('Erreur de chargement');
+                
+                const products = await response.json();
+                displayProducts(products);
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('productsContainer').innerHTML = `
+                    <div class="error">
+                        Impossible de charger les produits. Veuillez réessayer plus tard.
+                    </div>
+                `;
+            }
+        }
+        
+        // Afficher les produits
+        function displayProducts(products) {
+            const container = document.getElementById('productsContainer');
+            
+            if (products.length === 0) {
+                container.innerHTML = '<div class="loading">Aucun produit disponible</div>';
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="products-grid">
+                    ${products.map(product => `
+                        <div class="product-card" onclick="addToCart('${product._id}', '${product.name}', ${product.price}, '${product.unit}')">
+                            <div class="product-image">
+                                ${getProductEmoji(product.category)}
+                            </div>
+                            <div class="product-info">
+                                <div class="product-name">${product.name}</div>
+                                <div class="product-description">${product.description}</div>
+                                <div>
+                                    <span class="product-price">${product.price}</span>
+                                    <span class="product-unit"> FCFA/${product.unit}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        // Obtenir l'emoji pour la catégorie
+        function getProductEmoji(category) {
+            const emojis = {
+                'légumes': '🥬',
+                'fruits': '🍎',
+                'céréales': '🌾',
+                'autres': '🥕'
+            };
+            return emojis[category] || '🥬';
+        }
+        
+        // Ajouter au panier
+        function addToCart(id, name, price, unit) {
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id, name, price, unit, quantity: 1 });
+            }
+            
+            saveCart();
+            updateCartDisplay();
+            showNotification(`${name} ajouté au panier`);
+        }
+        
+        // Sauvegarder le panier
+        function saveCart() {
+            localStorage.setItem('kadidjath_cart', JSON.stringify(cart));
+        }
+        
+        // Mettre à jour l'affichage du panier
+        function updateCartDisplay() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Votre panier est vide</p>';
+                cartTotal.textContent = '0';
+                return;
+            }
+            
+            cartItems.innerHTML = cart.map(item => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid #e5e7eb;">
+                    <div>
+                        <strong>${item.name}</strong><br>
+                        <small>${item.price} FCFA/${item.unit} x ${item.quantity}</small>
+                    </div>
+                    <div>
+                        <span>${item.price * item.quantity} FCFA</span>
+                        <button onclick="removeFromCart('${item.id}')" style="margin-left: 0.5rem; background: #dc2626; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">×</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = total;
+        }
+        
+        // Supprimer du panier
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            saveCart();
+            updateCartDisplay();
+        }
+        
+        // Afficher le panier
+        function showCart() {
+            document.getElementById('cartModal').style.display = 'block';
+            updateCartDisplay();
+        }
+        
+        // Cacher le panier
+        function hideCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+        
+        // Commander
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Votre panier est vide');
+                return;
+            }
+            
+            // Simuler une commande
+            const order = {
+                customer: {
+                    name: 'Client Test',
+                    phone: '+22900000000',
+                    email: 'test@kadidjath.bj',
+                    address: 'Cotonou',
+                    city: 'Cotonou'
+                },
+                items: cart.map(item => ({
+                    product: item.id,
+                    quantity: item.quantity,
+                    price: item.price
+                })),
+                paymentMethod: 'à la livraison'
+            };
+            
+            fetch(`${API_URL}/orders`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(order)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Commande passée avec succès! Numéro: ' + data._id);
+                cart = [];
+                saveCart();
+                updateCartDisplay();
+                hideCart();
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la commande');
+            });
+        }
+        
+        // Notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #16a34a;
+                color: white;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                z-index: 2000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            updateCartDisplay();
+        });
+        
+        // Fermer le modal quand on clique en dehors
+        window.onclick = function(event) {
+            const modal = document.getElementById('cartModal');
+            if (event.target === modal) {
+                hideCart();
+            }
+        }
+    </script>
+</body>
+</html>
