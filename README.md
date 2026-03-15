@@ -1,7 +1,7 @@
 # Kadidjath - Plateforme E-commerce pour Produits Frais
 
 Plateforme e-commerce moderne pour la vente de produits frais au Bénin, avec intégration WhatsApp et Mobile Money.
-
+ lien: https://effortless-sprinkles-b186bf.netlify.app
 ## 🚀 Fonctionnalités
 
 ### 🛒 E-commerce
