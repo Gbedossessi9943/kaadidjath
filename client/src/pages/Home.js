@@ -79,6 +79,43 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Prérequis */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center mb-12">Prérequis pour commander</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mb-4">
+                <span className="text-primary-600 font-bold text-xl">📱</span>
+              </div>
+              <h3 className="font-semibold text-lg mb-2">Téléphone</h3>
+              <p className="text-gray-600 text-sm">Un numéro de téléphone actif pour la livraison et les notifications</p>
+            </div>
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mb-4">
+                <span className="text-primary-600 font-bold text-xl">📍</span>
+              </div>
+              <h3 className="font-semibold text-lg mb-2">Adresse de livraison</h3>
+              <p className="text-gray-600 text-sm">Adresse précise à Cotonou ou Abomey-Calavi</p>
+            </div>
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mb-4">
+                <span className="text-primary-600 font-bold text-xl">💳</span>
+              </div>
+              <h3 className="font-semibold text-lg mb-2">Moyen de paiement</h3>
+              <p className="text-gray-600 text-sm">Mobile Money (MTN, Moov) ou paiement à la livraison</p>
+            </div>
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mb-4">
+                <span className="text-primary-600 font-bold text-xl">⏰</span>
+              </div>
+              <h3 className="font-semibold text-lg mb-2">Disponibilité</h3>
+              <p className="text-gray-600 text-sm">Présent pour recevoir la commande (2-4h après validation)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
